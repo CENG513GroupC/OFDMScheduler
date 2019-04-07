@@ -41,7 +41,15 @@ add_executable(ofdm ${PROJECT_SOURCE_DIR}/src/ofdm.c
 	${PROJECT_SOURCE_DIR}/src/transceive.c
 	${PROJECT_SOURCE_DIR}/src/utils.c
 )
+
+add_executable(frameexperiment ${PROJECT_SOURCE_DIR}/src/frameexperimenting.c
+	${PROJECT_SOURCE_DIR}/src/config.c
+	${PROJECT_SOURCE_DIR}/src/transceive.c
+	${PROJECT_SOURCE_DIR}/src/utils.c
+)
+
 target_link_libraries(rx bladeRF m c liquid fec tuntap) 
 target_link_libraries(tx bladeRF m c liquid fec tuntap) 
 target_link_libraries(try bladeRF m c liquid fec tuntap) 
 target_link_libraries(ofdm bladeRF m c liquid fec tuntap) 
+target_link_libraries(frameexperiment bladeRF m c liquid fec tuntap) 

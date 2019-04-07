@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
    
     unsigned char header[8];        // data header
     unsigned char payload[PAYLOAD_LENGTH]={0};      // data payload
-    float complex y[12634];          // frame samples -- calculated for 1500 payload and 8 byte header
+    float complex y[BUFFER_SIZE];          // frame samples
     unsigned int  buf_len = PAYLOAD_LENGTH;
     float complex buf[buf_len];
     unsigned int i;
@@ -105,90 +105,6 @@ int main(int argc, char *argv[])
     int cnt=0;
     flexframegenprops_s ffp;
     int nread;
-
-
-    bladerf_init_devinfo(&dev_info);
-
-    if (argc >= 2) {
-        strncpy(dev_info.serial, argv[1], sizeof(dev_info.serial) - 1);
-    }
-    status = bladerf_open_with_devinfo(&devtx, &dev_info);
-
-    if (status != 0) {
-        fprintf(stderr, "Unable to open device: %s\n", bladerf_strerror(status));
-        return 1;
-    }
-    fprintf(stdout, "Device Serial: %s\tbladerf_open_with_devinfo: %s\n", dev_info.serial, bladerf_strerror(status));
-
-//    hostedx115-latest.rbf
-    bladerf_load_fpga(devtx, "hostedx115-latest.rbf");
-
-    /* Set up RX module parameters */
-    config_rx.module     = BLADERF_MODULE_RX;
-    config_tx.module     = BLADERF_MODULE_TX;
-    config_tx.frequency  = config_rx.frequency  = FREQUENCY_USED;
-    config_tx.bandwidth  = config_rx.bandwidth  = BANDWIDTH_USED;
-    config_tx.samplerate = config_rx.samplerate = SAMPLING_RATE_USED;
-    config_tx.rx_lna     = config_rx.rx_lna     = BLADERF_LNA_GAIN_MID;
-    config_tx.vga1       = config_rx.vga1       = 10;
-    config_tx.vga2       = config_rx.vga2       = 0;
-
-
-
-
-	//Initialization of "tun0" device
-	//It sets a random name but later we will change it to "tun0"
-	//It is a tun device so it will transfer the IP packets without containing ethernet header...
-	dev = tuntap_init();
-	if (tuntap_start(dev, TUNTAP_MODE_TUNNEL, TUNTAP_ID_ANY) == -1) {
-		return 1;
-	}
-	
-	//We are correcting the device name, dev-> "tun0"
-	tuntap_set_ifname(dev, "tun0");
-	
-	//Ip allocation for "tun0", 
-	if (tuntap_set_ip(dev, "10.0.0.1", 24) == -1) {
-		return 1;
-	}
-	
-	//We are setting tun0 device running mode...
-	//They can be seen via "ifconfig" command...
-	if (tuntap_up(dev) == -1) {
-		return 1;
-	}
-	
-	
-    //tun_rx_fd = tun_alloc(name, IFF_TUN | IFF_NO_PI); -- old one...
-    
-
-   
-    
-
-    status = configure_module(devtx, &config_tx);
-    if (status != 0) {
-        fprintf(stderr, "Failed to configure RX module. Exiting.\n");
-        return status;
-    }
-    fprintf(stdout, "configure_module: %s\n", bladerf_strerror(status));
-
-
-    /* Initialize synch interface on RX and TX modules */
-    status = init_sync_tx(devtx);
-    if (status != 0) {
-    	fprintf(stderr, "init_sync_tx. Exiting.\n");
-    	return status;
-    }
-    fprintf(stdout, "init_sync_tx: %s\n", bladerf_strerror(status));
-
-
-    status = calibrate(devtx);
-    if (status != 0) {
-        fprintf(stderr, "Failed to calibrate RX module. Exiting.\n");
-        return status;
-    }
-    fprintf(stdout, "calibrate: %s\n", bladerf_strerror(status));
-
 
 
 
@@ -225,34 +141,12 @@ ramp/down gracefully decreases the output signal level as per ramp/up.
     for (i=0; i<8; i++)
         header[i] = i;
 
-    while(status == 0 )
-    {
-    		cnt ++;
-
+   
 			memset(payload, 0x00, PAYLOAD_LENGTH);
 			//sprintf((char*)payload,"abcdef (%d)",cnt);
 			//memset(&payload[13], 0x00, PAYLOAD_LENGTH-13);
             
-            
-            
-            //nread=read(tun_rx_fd,payload,buf_len); -- old one
-            //Read the "tun0" device...	
-			nread = tuntap_read(dev, payload, buf_len);
-            
-            
-            
-            if (nread<=0)
-            {
-                perror("Reading from interface");
-               	tuntap_destroy(dev);
-
-                
-                //close(tun_rx_fd); -- old one
-                exit(1);
-            }
-
-		for(int a_ = 0; a_ < 10 ; a_++)
-		{
+        
 			
 			
 		/*		flexframegen_assemble()
@@ -345,32 +239,20 @@ ramp/down gracefully decreases the output signal level as per ramp/up.
         	
         	// A convertion is done for data to conform the  for bladeRF..
         	samples_len=symbol_len;
-        	tx_samples = convert_comlexfloat_to_sc16q11( y, symbol_len );
-        	if (tx_samples == NULL) {
-        		fprintf(stdout, "malloc error: %s\n", bladerf_strerror(status));
-        		return BLADERF_ERR_MEM;
-        	}
+        	
 
         	
-        	//Data is send to bladeRF ....        	
-        	status =  sync_tx(devtx, tx_samples, samples_len);
-			if (status != 0) {
-				fprintf(stderr, "Failed to sync_tx(). Exiting. %s\n", bladerf_strerror(status));
-				goto out;
-			}
-		}
+        
+		
 			
 			fprintf(stdout, "Packet %d transmitted\n", cnt);
 			//usleep(10000);
-    }
+    
 
 
 out:
-    bladerf_close(devtx);
     flexframegen_destroy(fg);
-    fprintf(stderr, "TX STATUS: %u,  %s\n", status, bladerf_strerror(status));
     
-          tuntap_destroy(dev);
 
     return status;
 }

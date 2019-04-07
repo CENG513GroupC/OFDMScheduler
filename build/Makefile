@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named frameexperiment
+
+# Build rule for target.
+frameexperiment: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 frameexperiment
+.PHONY : frameexperiment
+
+# fast build rule for target.
+frameexperiment/fast:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/build
+.PHONY : frameexperiment/fast
+
+#=============================================================================
 # Target rules for targets named rx
 
 # Build rule for target.
@@ -168,6 +181,7 @@ src/config.o: src/config.c.o
 
 # target to build an object file
 src/config.c.o:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/config.c.o
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/config.c.o
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/config.c.o
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/config.c.o
@@ -180,6 +194,7 @@ src/config.i: src/config.c.i
 
 # target to preprocess a source file
 src/config.c.i:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/config.c.i
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/config.c.i
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/config.c.i
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/config.c.i
@@ -192,11 +207,39 @@ src/config.s: src/config.c.s
 
 # target to generate assembly for a file
 src/config.c.s:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/config.c.s
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/config.c.s
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/config.c.s
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/config.c.s
 	$(MAKE) -f CMakeFiles/try.dir/build.make CMakeFiles/try.dir/src/config.c.s
 .PHONY : src/config.c.s
+
+src/frameexperimenting.o: src/frameexperimenting.c.o
+
+.PHONY : src/frameexperimenting.o
+
+# target to build an object file
+src/frameexperimenting.c.o:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/frameexperimenting.c.o
+.PHONY : src/frameexperimenting.c.o
+
+src/frameexperimenting.i: src/frameexperimenting.c.i
+
+.PHONY : src/frameexperimenting.i
+
+# target to preprocess a source file
+src/frameexperimenting.c.i:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/frameexperimenting.c.i
+.PHONY : src/frameexperimenting.c.i
+
+src/frameexperimenting.s: src/frameexperimenting.c.s
+
+.PHONY : src/frameexperimenting.s
+
+# target to generate assembly for a file
+src/frameexperimenting.c.s:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/frameexperimenting.c.s
+.PHONY : src/frameexperimenting.c.s
 
 src/main_rx.o: src/main_rx.c.o
 
@@ -285,6 +328,7 @@ src/transceive.o: src/transceive.c.o
 
 # target to build an object file
 src/transceive.c.o:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/transceive.c.o
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/transceive.c.o
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/transceive.c.o
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/transceive.c.o
@@ -297,6 +341,7 @@ src/transceive.i: src/transceive.c.i
 
 # target to preprocess a source file
 src/transceive.c.i:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/transceive.c.i
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/transceive.c.i
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/transceive.c.i
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/transceive.c.i
@@ -309,6 +354,7 @@ src/transceive.s: src/transceive.c.s
 
 # target to generate assembly for a file
 src/transceive.c.s:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/transceive.c.s
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/transceive.c.s
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/transceive.c.s
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/transceive.c.s
@@ -348,6 +394,7 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/utils.c.o
@@ -360,6 +407,7 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/utils.c.i
@@ -372,6 +420,7 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/frameexperiment.dir/build.make CMakeFiles/frameexperiment.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/rx.dir/build.make CMakeFiles/rx.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/tx.dir/build.make CMakeFiles/tx.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/ofdm.dir/build.make CMakeFiles/ofdm.dir/src/utils.c.s
@@ -386,6 +435,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... frameexperiment"
 	@echo "... rx"
 	@echo "... tx"
 	@echo "... ofdm"
@@ -393,6 +443,9 @@ help:
 	@echo "... src/config.o"
 	@echo "... src/config.i"
 	@echo "... src/config.s"
+	@echo "... src/frameexperimenting.o"
+	@echo "... src/frameexperimenting.i"
+	@echo "... src/frameexperimenting.s"
 	@echo "... src/main_rx.o"
 	@echo "... src/main_rx.i"
 	@echo "... src/main_rx.s"
